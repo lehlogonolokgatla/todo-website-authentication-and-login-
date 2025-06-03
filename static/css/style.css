@@ -1,0 +1,804 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5; /* Light grey background */
+    color: #333;
+}
+
+header {
+    background-color: #6a0dad; /* Deep purple */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.header-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo i {
+    color: #4CAF50; /* Green for checkmark */
+}
+
+.auth-nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.auth-nav a:hover {
+    color: #c790ed; /* Lighter purple on hover */
+}
+
+.new-list-btn {
+    background-color: #4CAF50; /* Green button */
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.new-list-btn:hover {
+    background-color: #45a049;
+}
+
+/* Style for logged-in user's name */
+.logged-in-user {
+    color: white;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+main {
+    min-height: calc(100vh - 150px); /* Adjust based on header/footer height */
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column; /* Allow content and flash messages to stack */
+    justify-content: flex-start; /* Align content to the top */
+    align-items: center; /* Center horizontally */
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* Task Input Area */
+.task-input-area {
+    margin-bottom: 30px;
+}
+
+#new-task-input {
+    width: calc(100% - 20px);
+    padding: 15px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.1em;
+    text-align: center;
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.input-hint {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 10px;
+}
+
+/* NEW: Due Date and Priority Inputs */
+.task-meta-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between inputs */
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.task-meta-inputs input {
+    width: 45%; /* Adjust width for two inputs side-by-side */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+
+/* Task List Styling */
+.task-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.task-list li {
+    display: flex;
+    align-items: flex-start; /* Align items to the top if text wraps */
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 1.1em;
+}
+
+.task-list li input[type="checkbox"] {
+    margin-top: 5px; /* Align checkbox with the top of text */
+    margin-right: 15px;
+    min-width: 20px;
+    min-height: 20px;
+    cursor: pointer;
+}
+
+/* Adjustments for task-content and task-text to make space */
+.task-list li .task-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* Stack text and meta */
+    align-items: flex-start; /* Align contents to the left */
+}
+
+.task-list li label, .task-list li .task-text {
+    flex-grow: 1;
+    cursor: pointer;
+    margin-bottom: 5px; /* Space between text and meta */
+}
+
+.task-list li input[type="checkbox"]:checked + .task-content .task-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+/* NEW: Task Meta Display */
+.task-meta-display {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 15px; /* Space between date and priority */
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: #777;
+    /* margin-left: 20px; /* Indent to align with task text, now handled by task-content flex */
+}
+
+.task-meta-display span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.task-due-date i, .task-priority i {
+    color: #6a0dad; /* Purple icon */
+}
+
+/* Ensure task-edit-input is not hidden by other styles */
+.task-list li .task-content .task-edit-input {
+    width: 95%; /* Adjust width so it doesn't overflow */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1em;
+    box-sizing: border-box;
+    margin-bottom: 5px; /* Space below input when editing */
+}
+
+.delete-task {
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-left: 15px;
+    margin-top: 5px; /* Align 'X' with the top of task item */
+}
+
+.delete-task:hover {
+    color: #c82333;
+}
+
+
+/* Authentication Forms (login, register) */
+.auth-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"] {
+    width: calc(100% - 22px); /* Account for padding + border */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.auth-form .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.auth-form .submit-btn:hover {
+    background-color: #45a049;
+}
+
+.auth-hint {
+    margin-top: 20px;
+    font-size: 0.95em;
+    color: #666;
+}
+
+.auth-hint a, .auth-options a {
+    color: #6a0dad; /* Purple */
+    text-decoration: none;
+}
+
+.auth-hint a:hover, .auth-options a:hover {
+    text-decoration: underline;
+}
+
+.auth-options {
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+
+/* Footer Styling */
+footer {
+    background-color: #6a0dad; /* Deep purple */
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    position: relative; /* Changed to relative for simpler flow or fixed if needed */
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+.buy-coffee-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px; /* For mobile */
+}
+
+.buy-coffee-btn:hover {
+    background-color: #45a049;
+}
+
+.footer-nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 0.9em;
+    transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+    color: #c790ed;
+}
+
+/* Flash messages display */
+.flash-messages {
+    background-color: #d4edda; /* Light green for success */
+    color: #155724; /* Dark green text */
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 20px auto; /* Centered with auto margins */
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.flash-messages p {
+    margin: 5px 0;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .header-content, .footer-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .auth-nav a {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .footer-nav a {
+        margin: 0 5px;
+    }
+
+    .container, .auth-container {
+        padding: 20px;
+    }
+
+    .task-meta-inputs {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .task-meta-inputs input {
+        width: 100%;
+    }
+}
+
+/* static/css/styles.css (Add these new rules to your existing CSS) */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex; /* Use flexbox for overall layout */
+    min-height: 100vh; /* Ensure body takes full height */
+    flex-direction: column;
+}
+
+.header {
+    background-color: #6a0dad; /* Purple */
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.header .auth-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.header .auth-links a:hover {
+    background-color: #7b2edc; /* Lighter purple on hover */
+}
+
+/* Specific styling for the 'Log in', 'Sign up', 'Log out' buttons */
+.header .auth-links .btn-auth {
+    background-color: #4CAF50; /* Green for login/signup */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.header .auth-links .btn-auth:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* New List button styling */
+.header .auth-links .btn-new-list {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 15px; /* Spacing from other links */
+    transition: background-color 0.3s ease;
+}
+
+.header .auth-links .btn-new-list:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto; /* Centering the container */
+    flex-grow: 1; /* Allows container to grow and push footer down */
+    text-align: center; /* Center main headings within the container */
+}
+
+.container h2 {
+    color: #6a0dad;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+.task-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between input and meta inputs */
+    margin-bottom: 25px;
+}
+
+#new-task-input,
+.task-meta-inputs input {
+    width: calc(100% - 20px); /* Adjust for padding */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.task-meta-inputs {
+    display: flex;
+    gap: 10px; /* Space between due date and priority inputs */
+}
+
+.task-meta-inputs input {
+    flex-grow: 1; /* Allow them to take equal space */
+}
+
+.input-hint {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+    text-align: left; /* Align hint text to the left */
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+}
+
+.task-list li {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
+}
+
+.task-list li:last-child {
+    border-bottom: none;
+}
+
+.task-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.task-list li input[type="checkbox"] {
+    margin-right: 15px;
+    min-width: 20px; /* Ensure checkbox is not too small */
+    min-height: 20px;
+    cursor: pointer;
+}
+
+.task-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* Stack text and meta vertically */
+    align-items: flex-start; /* Align content to the left */
+}
+
+.task-text {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 5px; /* Space between text and meta */
+    word-break: break-word; /* Ensure long words break */
+    white-space: normal; /* Allow text to wrap */
+    flex-grow: 1;
+    cursor: pointer; /* Indicate it's clickable for editing */
+}
+
+.task-edit-input {
+    width: 100%; /* Take full width of its container */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.task-list li.completed .task-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.task-meta-display {
+    display: flex;
+    gap: 10px; /* Space between due date and priority */
+    font-size: 0.85em;
+    color: #777;
+}
+
+.task-meta-display i {
+    margin-right: 3px;
+    color: #6a0dad;
+}
+
+.delete-task {
+    color: #ff4d4d;
+    cursor: pointer;
+    margin-left: 15px;
+    font-size: 1.2em;
+    transition: color 0.2s ease;
+}
+
+.delete-task:hover {
+    color: #e60000;
+}
+
+.footer {
+    background-color: #6a0dad;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9em;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Authentication Forms */
+.auth-form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.auth-form h2 {
+    color: #6a0dad;
+    margin-bottom: 25px;
+}
+
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.auth-form button,
+.auth-form .btn-link {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* For btn-link */
+    display: inline-block; /* For btn-link */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.auth-form button:hover,
+.auth-form .btn-link:hover {
+    background-color: #45a049;
+}
+
+.auth-form p {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.auth-form p a {
+    color: #6a0dad;
+    text-decoration: none;
+}
+
+.auth-form p a:hover {
+    text-decoration: underline;
+}
+
+/* Flash Messages */
+.flash-messages {
+    position: fixed;
+    top: 70px; /* Below the header */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1000;
+}
+
+.flash-messages .alert {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.flash-messages .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.flash-messages .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+/* NEW: List Management Styles */
+.list-management-area {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #e9ebee; /* Light background for list area */
+    border-radius: 8px;
+    text-align: left;
+}
+
+#current-list-name {
+    color: #6a0dad;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 2em;
+    text-align: center;
+    border-bottom: 2px solid #6a0dad;
+    padding-bottom: 10px;
+}
+
+.list-selection h3 {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+#list-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow lists to wrap to next line */
+    gap: 10px; /* Space between list items */
+    margin-bottom: 20px;
+    justify-content: center; /* Center list items */
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.list-item {
+    background-color: #6a0dad; /* Purple for list items */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px; /* Pill shape */
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap; /* Prevent text wrapping inside pill */
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background-color: #7b2edc;
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.list-item.active {
+    background-color: #4CAF50; /* Green for active list */
+    transform: scale(1.05); /* Slightly larger when active */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.new-list-creation {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#new-list-name-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+#create-list-btn {
+    padding: 10px 15px;
+    background-color: #6a0dad; /* Purple button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#create-list-btn:hover {
+    background-color: #7b2edc;
+}

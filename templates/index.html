@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Your To-Do List{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if logged_in %}
+        <div class="list-management-area">
+            <h2 id="current-list-name">{{ current_list_name }}</h2> <div class="list-selection">
+                <h3>Your Lists:</h3>
+                <div id="list-container">
+                    {% for list_item in user_lists %}
+                        <a href="#" class="list-item {% if list_item.id == current_list_id %}active{% endif %}" data-list-id="{{ list_item.id }}">{{ list_item.name }}</a>
+                    {% endfor %}
+                </div>
+                <div class="new-list-creation">
+                    <input type="text" id="new-list-name-input" placeholder="New list name">
+                    <button id="create-list-btn">Create List</button>
+                </div>
+            </div>
+
+            <input type="hidden" id="initial-current-list-id" value="{{ current_list_id }}">
+        </div>
+
+        <div class="task-input-area">
+            <input type="text" id="new-task-input" placeholder="Type here e.g. buy bacon" autofocus>
+
+            <div class="task-meta-inputs">
+                <input type="date" id="new-task-due-date" title="Due Date">
+                <input type="text" id="new-task-priority" placeholder="Priority (e.g., High)" title="Priority">
+            </div>
+
+            <p class="input-hint">Enter your first task and press enter to save</p>
+        </div>
+        <ul class="task-list">
+            {% if tasks %}
+                {% for task in tasks %}
+                <li data-task-id="{{ task.id }}">
+                    <input type="checkbox" id="task-{{ task.id }}" data-task-id="{{ task.id }}" {% if task.complete %}checked{% endif %}>
+                    <div class="task-content">
+                        <span class="task-text">{{ task.text }}</span>
+                        <input type="text" class="task-edit-input" value="{{ task.text }}" style="display: none;">
+                        <div class="task-meta-display">
+                            {% if task.due_date %}
+                                <span class="task-due-date"><i class="far fa-calendar-alt"></i> {{ task.due_date.strftime('%Y-%m-%d') }}</span>
+                            {% endif %}
+                            {% if task.priority %}
+                                <span class="task-priority"><i class="fas fa-tag"></i> {{ task.priority }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <span class="delete-task" data-task-id="{{ task.id }}"><i class="fas fa-times"></i></span>
+                </li>
+                {% endfor %}
+            {% else %}
+                <p>No tasks yet! Start by typing above.</p>
+            {% endif %}
+        </ul>
+    {% else %}
+        <h2>Welcome to the Flask To-Do App!</h2>
+        <p>Please <a href="{{ url_for('login') }}">log in</a> or <a href="{{ url_for('register') }}">sign up</a> to create and manage your personal to-do lists.</p>
+    {% endif %}
+</div>
+{% endblock %}

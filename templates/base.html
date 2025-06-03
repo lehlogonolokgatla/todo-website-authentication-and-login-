@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flask To-Do App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-check-square"></i> To-do List
+            </div>
+            <nav class="auth-nav">
+                {% if logged_in %}
+                    <a href="{{ url_for('logout') }}">Log out</a>
+                    <span class="logged-in-user">Hi, {{ current_user.name }}</span>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Log in</a>
+                    <a href="{{ url_for('register') }}" class="new-list-btn">+ New List</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="buy-coffee-btn">
+                <i class="fas fa-mug-hot"></i> Buy Me A Coffee
+            </a>
+            <nav class="footer-nav">
+                <a href="#">About</a>
+                <a href="#">Developers</a>
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+                <a href="#">Suggest a feature</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
